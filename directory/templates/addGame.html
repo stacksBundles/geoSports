@@ -22,9 +22,7 @@
    }(document, 'script', 'facebook-jssdk'));
 </script>
 
-FB.ui({method: 'apprequests',
-  message: 'My Great Request'
-}, requestCallback);
+{% if user.is_authenticated %}
 
 <div class="form">
 
@@ -38,5 +36,24 @@ FB.ui({method: 'apprequests',
 	</table>
 
 </form>
+
+{% else %}
+
+<table>
+  <tr>
+    <td>
+      Please <a href="{% url 'directory.views.register' %}"> create an account </a> or <a href="{% url 'django.contrib.auth.views.login' %}"> login </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Need to login quickly? Use your facebook account:
+      <button class="btn btn-success" id="fb-auth">Login</button>
+    </td>
+  </tr>
+</table>
+
+
+{% endif %}
 
 </div>

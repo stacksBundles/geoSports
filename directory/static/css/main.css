@@ -240,7 +240,12 @@ div#map-canvas {
     display: none;
 }
 
-
+.createButton {
+    background-color: rgb(100, 100, 100);
+    color: rgb(255, 255, 255);
+    font-size: 130%;
+    padding: 4px 4px 4px 4px;
+}
 
 
 /* ==========================================================================
