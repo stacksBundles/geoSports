@@ -104,6 +104,7 @@ def submitGame(request):
             return response
 
 
+
 def register(request):
 
     if request.method == "POST" and request.is_ajax():
