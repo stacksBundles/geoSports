@@ -1,0 +1,13 @@
+<body>
+
+    
+    	<table>
+    		{% for games in gameList %}
+    		<tr>
+    			<td> {{ game.title }}</td><td> {{ game.type }} </td><td> {{ game.missing}} </td><td> {{ game.location }}</td><td> {{ game.skill_level }}</td>
+    		</tr>
+    		{% endfor %}
+    	</table>
+
+
+</body>

@@ -1,0 +1,14 @@
+<div class="form">
+
+<form>
+	{% csrf_token %}
+	<table>
+		{% for entry in form %}
+		<tr><td>{{ entry }}</td></tr>
+		<tr><td>{{ entry.label_tag }}</td></tr>
+		{% endfor %}
+	</table>
+
+</form>
+
+</div>
