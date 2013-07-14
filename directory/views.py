@@ -6,7 +6,6 @@ from django.utils import simplejson
 import re
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 def index(request):
 
@@ -16,19 +15,7 @@ def index(request):
 
     for game in gameList:
 
-        date = str(game.when)
-
-        numbers = re.findall("(\d+)", date)
-
-        newDate = ""
-        
-        for bits in numbers:
-
-            newDate = newDate + bits + "/"
-
-        newDate = newDate[:-1]
-
-        dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
+        dictionary = {"lat": game.lat, "long": game.long, "when": str(game.when), "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
 
         entry = simplejson.dumps(dictionary)
 
@@ -37,12 +24,9 @@ def index(request):
 
     form = filterForm()
 
-    addForm = addGameForm()
-
     context = {
         "gameList": gameJSON,
         "form": form,
-        "addForm": addForm,
         }
 
     return render(request, "index.html", context)
@@ -51,11 +35,10 @@ def addGame(request):
 
     if request.is_ajax():
 
-        addForm = addGameForm()
+        form = addGameForm()
 
         context = {
             "statusUpdate": statusUpdate,
-            "addForm": addForm,
             }
 
         return render(request, "addGame.html", context)
@@ -109,7 +92,6 @@ def submitGame(request):
             return response
 
 
-
 def register(request):
 
     if request.method == "POST" and request.is_ajax():
@@ -138,15 +120,11 @@ def filter(request):
 
         print("AJAX BABY")
 
-        print(request.POST)
+        #print(request.POST)
 
         sport = request.POST['sport_filter']
 
-        sport = str(sport).strip()
-
         skill = request.POST['skill_filter']
-
-        skill = str(skill).strip()
 
         print(sport)
 
@@ -154,15 +132,9 @@ def filter(request):
 
         a = games.objects.all().filter(sport = sport)
 
-        if a:
+        if sport == "All" and skill == "All":
 
-            print("matched sport")
-        
-
-        if sport == "All":
-
-            gameList = games.objects.all().filter(skill_level = skill)
-
+            gameList = games.objects.all()
 
         else:
 
@@ -170,48 +142,23 @@ def filter(request):
 
                 gameList = games.objects.all().filter(sport = sport)
 
+            elif sport == "All":
+
+                gameList = games.objects.all().filter(skill_level = skill)
+
             else:
 
                 gameList = games.objects.all().filter(sport = sport).filter(skill_level = skill)
-
-            
-
-
-        if not gameList:
-
-            print("failed")
-
-            statusReturn = "Sorry, no one is playing " + str(sport) + ", how about you start a game?"
-
-            return HttpResponse(statusReturn)
 
         gameJSON = []
         
         for game in gameList:
 
-            date = str(game.when)
-
-            numbers = re.findall("(\d+)", date)
-
-            newDate = ""
+            dictionary = {"lat": game.lat, "long": game.long, "when": str(game.when), "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
             
-            for bits in numbers:
+            gameJSON.append(dictionary)
 
-                newDate = newDate + bits + "/"
-
-            newDate = newDate[:-1]
-
-            dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
-
-            entry = simplejson.dumps(dictionary)
-
-            gameJSON.append(entry)
-
-        if gameJSON:
-
-            print(gameJSON)
-
-        return HttpResponse(gameJSON, content_type="application/json")
+        return HttpResponse(simplejson.dumps(gameJSON), content_type="application/json")
             
 
 def signup(request):
@@ -219,10 +166,15 @@ def signup(request):
     string = "blank"
     
     context = {
-        string : "blank",
+        string : "blank"
     }
     
-    return render(request, "addgame.html", context)
+    return render(request, "signup.html", context)
+            
+
+ 
+
+        
 
 def register(request):
 
