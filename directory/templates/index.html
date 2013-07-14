@@ -292,8 +292,8 @@ $(document).keyup(function(e) {
                 {% csrf_token %}
                 <table>
                   {% for entry in addForm %}
-                  <tr><td>{{ entry }}</td></tr>
-                  <tr><td>{{ entry.label_tag }}</td></tr>
+                    <tr><td>{{ entry }}</td></tr>
+                    <tr><td>{{ entry.label_tag }}</td></tr>
                   {% endfor %}
                 </table>
 

@@ -276,6 +276,19 @@ div#map-canvas {
     padding: 4px 8px 4px 8px;
 }
 
+#profile {
+    background-image: url(/static/images/background.png);
+    width: 550px;
+}
+
+.profileTables {
+    width: 300px;
+    margin-left: 20px;
+}
+
+
+
+
 
 /* ==========================================================================
    Helper classes
