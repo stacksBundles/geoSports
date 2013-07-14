@@ -166,10 +166,16 @@ def signup(request):
     string = "blank"
     
     context = {
-        string : "blank"
+        string : "blank",
     }
     
-    return render(request, "signup.html", context)
+    return render(request, "addgame.html", context)
+
+def register(request):
+
+    string = "null"
+
+    return HttpResponse(string)
             
 
  

@@ -225,13 +225,14 @@ div#map-canvas {
     background-color: rgba(255, 255, 255, 0.8);
     position: fixed;
     width: 550px;
-    height: 300px;
+    height: 330px;
     left: 50%;
     top: 50%;
     margin-top: -150px;
     margin-left: -275px;
     z-index: 100;
     display: none;
+    padding: 8px 8px 8px 8px;
 }
 
 .shower-curtain {
@@ -245,7 +246,12 @@ div#map-canvas {
     display: none;
 }
 
-
+.createButton {
+    background-color: rgb(100, 100, 100);
+    color: rgb(255, 255, 255);
+    font-size: 130%;
+    padding: 4px 4px 4px 4px;
+}
 
 
 /* ==========================================================================

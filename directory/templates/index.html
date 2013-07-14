@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
         <link rel="stylesheet" href="{{ STATIC_URL }}css/default.css">
         <script src="{{ STATIC_URL }}js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         
         
     <!--
@@ -26,6 +27,30 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&language=en"></script>
 
     <script>
+
+      // FACEBOOK API SCRIPT
+      // -------------------
+
+              window.fbAsyncInit = function() {
+                // init the FB JS SDK
+                FB.init({
+                  appId      : '586548918064005',                        // App ID from the app dashboard
+                  channelUrl : '{{ STATIC_URL }}channel.html', // Channel file for x-domain comms
+                  status     : true,                                 // Check Facebook Login status
+                  xfbml      : true                                  // Look for social plugins on the page
+                });
+
+                // Additional initialization code such as adding Event Listeners goes here
+              };
+
+              // Load the SDK asynchronously
+              (function(d, s, id){
+                 var js, fjs = d.getElementsByTagName(s)[0];
+                 if (d.getElementById(id)) {return;}
+                 js = d.createElement(s); js.id = id;
+                 js.src = "//connect.facebook.net/en_US/all.js";
+                 fjs.parentNode.insertBefore(js, fjs);
+               }(document, 'script', 'facebook-jssdk'));
     
 //colors
 var yellow = "FFFF57";
@@ -162,6 +187,10 @@ function handleNoGeolocation(errorFlag) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+$(document).on("click", ".createButton", function() {
+  $(".pop-up").show();
+})
     </script>        
         
     </head>
@@ -173,7 +202,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         <!-- Add your site or application content here -->    
         <header>
             <div class="wrapper">
-                <div id=logo">
+                <div id="logo">
                     <img src="{{ STATIC_URL }}images/homepage/logo-geosports-FINAL.png" alt="logo"/>
                 </div>
                 <div id="filters">
@@ -187,6 +216,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
                             {% endfor %}
                         </form>
                     </div>
+                </div>
+                <div class="createButton">
+                  create game
                 </div>
                 <div id="meta">
                 
@@ -208,9 +240,49 @@ google.maps.event.addDomListener(window, 'load', initialize);
         </div>
         
         <div class="shower-curtain"></div>
-        <div class="pop-up"></div>
+        <div class="pop-up">
+          <div id="fb-root"></div>
+          
+            {% if user.is_authenticated %}
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <div class="form">
+
+              <form>
+                {% csrf_token %}
+                <table>
+                  {% for entry in form %}
+                  <tr><td>{{ entry }}</td></tr>
+                  <tr><td>{{ entry.label_tag }}</td></tr>
+                  {% endfor %}
+                </table>
+
+              </form>
+
+            {% else %}
+
+              <table>
+                <tr>
+                  <td>
+                    Please <a href="{% url 'directory.views.register' %}"> create an account </a> or <a href="{% url 'django.contrib.auth.views.login' %}"> login </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Need to login quickly? Use your facebook account:
+                    <button class="btn btn-success" id="fb-auth">Login</button>
+                  </td>
+                </tr>
+              </table>
+
+
+            {% endif %}
+
+</div>
+        </div>
+
+
+
+        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="{{ STATIC_URL }}js/plugins.js"></script>
         <script src="{{ STATIC_URL }}js/main.js"></script>
