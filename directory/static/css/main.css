@@ -151,7 +151,7 @@ div#meta > div {
 div.signup {
     width: 197px;
     height: 55px;
-    background-image: url(../img/button.png);
+    background-image: url(/static/images/homepage/button-signup.png);
     background-repeat: no-repeat;
     color: white;
     font-size: 0.95em;
@@ -162,6 +162,11 @@ div.signup {
 
 div.signup:hover {
     cursor: pointer;
+}
+
+div.signup a {
+    color: white;
+    text-decoration: none;
 }
 
 

@@ -19,7 +19,7 @@ $(".shower-curtain, .BTN-close-pop-up").click(function() {
 
 $("#submit-filter select").change(function() {
     var data = $(this).parent("form").serializeArray();
-    $.post("/filter/", data, function(ret){
+    $.post("/filter/", data, function(ret) {
     
         clearMap(gameMarkers);
   
@@ -35,15 +35,11 @@ $("#submit-filter select").change(function() {
         
         console.log(ret);
         
-        var filtered_games = JSON.parse(ret);
-        
-        console.log(filtered_games);
-        
-        for (var i = 0; i < filtered_games.length; i++) {
+        for (var i = 0; i < ret.length; i++) {
   
             // Build the game markers array
             gameMarkers.push(new google.maps.Marker({
-                position: new google.maps.LatLng(filtered_games[i].lat, filtered_games[i].long ),
+                position: new google.maps.LatLng(ret[i].lat, ret[i].long ),
                 icon: pinImage,
                 shadow: pinShadow,
                 map: map,
@@ -52,7 +48,7 @@ $("#submit-filter select").change(function() {
               })
             );
             
-            gameMarkers[i].info = filtered_games[i];
+            gameMarkers[i].info = ret[i];
             
             // Add the click listener for that marker
             google.maps.event.addListener(gameMarkers[i], 'click', function(e) {
