@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class games(models.Model):
@@ -37,7 +38,7 @@ class games(models.Model):
 
     note = models.CharField(max_length = 140, blank = True, default = "default for testing, will be updated later")
 
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, default=1)
 
 
 class locations(models.Model):
@@ -69,9 +70,9 @@ class profile(models.Model):
 
     reputation = models.IntegerField()
 
-    image = models.ImageField(upload_to = "pictures")
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, default=1)
+    
+    
 
     
 

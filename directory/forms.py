@@ -1,4 +1,5 @@
 from django import forms
+from directory.models import profile
 
 class addGameForm(forms.Form):
 

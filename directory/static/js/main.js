@@ -19,5 +19,5 @@ $(".shower-curtain, .BTN-close-pop-up").click(function() {
 
 $("#submit-filter select").change(function() {
     var data = $(this).parent("form").serializeArray();
-    $.post("/", data, function(ret){ console.log(ret) });
+    $.post("/filter/", data, function(ret){ console.log(ret) });
 });

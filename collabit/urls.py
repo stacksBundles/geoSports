@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^$', 'directory.views.index'),
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^signup/$', 'directory.views.signup'),
-    url(r'^fliter/$', 'directory.views.filter'),
+    url(r'^filter/$', 'directory.views.filter'),
     # url(r'^collabit/', include('collabit.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

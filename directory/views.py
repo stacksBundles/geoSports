@@ -5,7 +5,6 @@ from directory.models import games, locations, profile
 from django.utils import simplejson
 import re
 from django.http import HttpResponse
-from django.contrib.auth import User
 from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
@@ -38,7 +37,7 @@ def index(request):
     form = filterForm()
 
     context = {
-        "gameList": gameList,
+        "gameList": gameJSON,
         "form": form,
         }
 
@@ -133,36 +132,36 @@ def filter(request):
 
         print("AJAX BABY")
 
-        sport = request.POST['sport']
+        sport = request.POST['sport_filter']
 
-        skill = request.POST['skill']
+        skill = request.POST['skill_filter']
 
         if sport == "All":
 
-            gameList = games.objects.all().filter(skill_level = request.POST['skill_level'])
+            gameList = games.objects.all().filter(skill_level = request.POST['skill_filter'])
 
-        elif skill == "All"
+        elif skill == "All":
 
-            gameList = games.objects.all().filter(sport = sport, skill_level = request.POST['skill_level'])
+            gameList = games.objects.all().filter(sport = sport, skill_level = request.POST['skill_filter'])
 
         if not gameList:
 
             statusReturn = "Sorry, no one is playing " + str(sport) + ", how about you start a game?"
 
-            gameList = games.objects.all()
+            return HttpResponse(statusReturn)
 
-            return render(request, "updatedMap.html", context)
-
-
-        context = {
-            "gameList": gameList,
-            "statusReturn": statusReturn,
-            }
-
-        return render(request, "updatedMap.html", context)
+        return HttpResponse(gameList)
             
 
- 
+def signup(request):
+
+    string = "blank"
+    
+    context = {
+        string : "blank"
+    }
+    
+    return render(request, "signup.html", context)
             
 
  
