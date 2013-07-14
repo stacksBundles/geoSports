@@ -1,36 +1,43 @@
 from django import forms
-from directory.models import profile
+from django.forms import ModelForm
+from directory.models import profile, games
 
-class addGameForm(forms.Form):
+class addGameForm(ModelForm):
 
-    lat = forms.FloatField()
+    class Meta:
 
-    long = forms.FloatField()
+        model = games
 
-    when = forms.DateField()
+        exclude = ('author', 'note')
 
-    sport = forms.CharField()
-
-    isItOpen = forms.BooleanField()
-
-    players_needed = forms.IntegerField()
-
-    BEGINNER = "Beginner"
-
-    COMPETITIVE = "Competitive"
-
-    ELITE = "Elite"
-
-    LEVEL = "Any Level"
-
-    SKILL_CHOICES = (
-        (BEGINNER, "Beginner"),
-        (COMPETITIVE, "Competitive"),
-        (ELITE, "Elite"),
-        (LEVEL, 'Any Level'),
-        )
-
-    skill_level = forms.ChoiceField(choices = SKILL_CHOICES)
+##    lat = forms.FloatField()
+##
+##    long = forms.FloatField()
+##
+##    when = forms.DateField()
+##
+##    sport = forms.CharField()
+##
+##    isItOpen = forms.BooleanField()
+##
+##    players_needed = forms.IntegerField()
+##
+##    BEGINNER = "Beginner"
+##
+##    COMPETITIVE = "Competitive"
+##
+##    ELITE = "Elite"
+##
+##    LEVEL = "Any Level"
+##
+##    SKILL_CHOICES = (
+##        (BEGINNER, "Beginner"),
+##        (COMPETITIVE, "Competitive"),
+##        (ELITE, "Elite"),
+##        (LEVEL, 'Any Level'),
+##        )
+##
+##    skill_level = forms.ChoiceField(choices = SKILL_CHOICES)
 
 class filterForm(forms.Form):
 

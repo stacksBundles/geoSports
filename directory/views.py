@@ -55,29 +55,9 @@ def submitGame(request):
 
     if request.method == "POST" and request.is_ajax():
 
-        data = {}
+        print("request received: submit new game")
 
-        data['lat'] = request.POST['lat']
-
-        data['long'] = request.POST['long']
-
-        data['when'] = request.POST['when']
-
-        data['sport'] = request.POST['sport']
-
-        data['isItOpen'] = request.POST['open']
-
-        if not request.POST['open']:
-
-            data['players_needed'] = request.POST['players']
-
-        else:
-
-            data['players_needed'] = ""
-
-        data['skill_level'] = request.POST['skill']
-
-        validate = addGameForm(data)
+        validate = addGameForm(request.POST)
 
         if validate.is_valid():
             

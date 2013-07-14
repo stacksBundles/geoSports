@@ -17,11 +17,11 @@ class games(models.Model):
 
     isItOpen = models.BooleanField()
 
-    players_needed = models.IntegerField(null = True)
+    players_needed = models.IntegerField(null = True, default = 0)
 
     BEGINNER = "Beginner"
 
-    COMPETITIVE = "Competitive"
+    COMPETITIVE = "Competitivxe"
 
     ELITE = "Elite"
 
@@ -39,6 +39,7 @@ class games(models.Model):
     note = models.CharField(max_length = 140, blank = True, default = "default for testing, will be updated later")
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, default=1)
+    
 
 
 class locations(models.Model):
