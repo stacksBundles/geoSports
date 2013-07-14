@@ -4,6 +4,9 @@ from directory.forms import addGameForm, filterForm
 from directory.models import games, locations, profile
 from django.utils import simplejson
 import re
+from django.http import HttpResponse
+from django.contrib.auth import User
+from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
 
@@ -25,7 +28,7 @@ def index(request):
 
         newDate = newDate[:-1]
 
-        dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen}
+        dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
 
         entry = simplejson.dumps(dictionary)
 
@@ -34,12 +37,8 @@ def index(request):
 
     form = filterForm()
 
-    if form:
-
-        print("form passed" + str(type(form)))
-
     context = {
-        "gameList": gameJSON,
+        "gameList": gameList,
         "form": form,
         }
 
@@ -52,7 +51,7 @@ def addGame(request):
         form = addGameForm()
 
         context = {
-            "form": form,
+            "statusUpdate": statusUpdate,
             }
 
         return render(request, "addGame.html", context)
@@ -79,54 +78,54 @@ def submitGame(request):
 
             data['players_needed'] = request.POST['players']
 
+        else:
+
+            data['players_needed'] = ""
+
         data['skill_level'] = request.POST['skill']
 
         validate = addGameForm(data)
 
         if validate.is_valid():
             
-            new_game = games.objects.create(lat = data['lat'], long = data['long'], when = data['when'], sport = data['sport'], isItOpen = data['isItOpen'], players_needed = data['players_needed'], skill_level = data['skill_level'])
-
-            new_game.save()
+            new_game = validate.save()
 
             gameList = games.objects.all()
 
             justPosted = new_game
 
-            statusReturn = "Null"
+            response = HttpResponse("success")
 
-            context = {
-                "statusReturn": statusReturn,
-                "gameList": gameList,
-                "justPosted": justPosted,
-                }
-
-            return render(request, "index.html", context)
+            return response
 
         else:
 
-            statusReturn = "Game save failed"
+            response = HttpResponse("failure")
 
-            gameList = games.objects.all()
-
-            context = {
-                "statusReturn": statusReturn,
-                "gameList": gameList,
-                }
-
-            return render(request, "index.html", context)
+            return response
 
 
-    
-def signup(request):
+def register(request):
 
-    string = "Null"
+    if request.method == "POST" and request.is_ajax():
 
-    context = {
-        "string": string,
-        }
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+            
+            new_user = form.save()
+            
+            return HttpResponse("success")
+        
+    else:
+        
+        form = UserCreationForm()
 
-    return render(request, "signup.html", context)
+        context = {
+            "form": form,
+            }
+        
+    return render(request, "registration/register.html", context)
         
 def filter(request):
 
@@ -136,11 +135,13 @@ def filter(request):
 
         sport = request.POST['sport']
 
+        skill = request.POST['skill']
+
         if sport == "All":
 
             gameList = games.objects.all().filter(skill_level = request.POST['skill_level'])
 
-        else:
+        elif skill == "All"
 
             gameList = games.objects.all().filter(sport = sport, skill_level = request.POST['skill_level'])
 
@@ -152,7 +153,6 @@ def filter(request):
 
             return render(request, "updatedMap.html", context)
 
-        statusReturn = "Filtered by sport type: " + str(sport) + " and skill level: " + str(skill_level)
 
         context = {
             "gameList": gameList,

@@ -1,5 +1,17 @@
-<html>
-	<body>
-		Signup isn't working yet
-	</body>
-</html>
+{% extends 'index.html' %}
+
+{% block main %}
+
+<div class="facebook-button">
+	Sign up using your facebook profile. Quick and easy!
+	( here's where the facebook button goes )
+</div>
+<div class="form">
+	<form>
+		{% for field in form %}
+		{{ field }}
+		{% endfor %}
+	</form>
+</div>
+
+{% endblock %}

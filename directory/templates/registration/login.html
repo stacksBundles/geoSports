@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+	<div class="container_content2" id="selector">
+
+    Please login:<br><br>
+
+<form method="POST" action="{% url 'django.contrib.auth.views.login' %}" id="lookup-house">
+	{% csrf_token %}
+		{{ form.username.label_tag }}<br><br>
+		{{ form.username }}<br><br>
+		{{ form.password.label_tag }}<br><br>
+		{{ form.password }}<br><br>
+	<input type="submit" value="login" id="lookup-house"/>
+	<input type="hidden" name="next" value="/edit/" />
+</form>
+    
+</div>
+
+{% endblock %}
