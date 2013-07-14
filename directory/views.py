@@ -133,17 +133,19 @@ def filter(request):
 
         print("AJAX BABY")
 
+        print(request.POST)
+
         sport = request.POST['sport']
 
         skill = request.POST['skill']
 
         if sport == "All":
 
-            gameList = games.objects.all().filter(skill_level = request.POST['skill_level'])
+            gameList = games.objects.all().filter(skill_level = skill)
 
         elif skill == "All"
 
-            gameList = games.objects.all().filter(sport = sport, skill_level = request.POST['skill_level'])
+            gameList = games.objects.all().filter(sport = sport, skill_level = skill)
 
         if not gameList:
 
