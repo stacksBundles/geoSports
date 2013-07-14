@@ -268,12 +268,12 @@ $(document).keyup(function(e) {
             {% csrf_token %}
             <table>
                   {% for entry in addForm %}
-                    <tr><td>{{ entry }}</td></tr>
                     <tr><td>{{ entry.label_tag }}</td></tr>
+                    <tr><td>{{ entry }}</td></tr>
                   {% endfor %}
             </table>
 
-            <span id="add-game"> submit </span>
+            <span id="add-game">submit</span>
 
             </form>
 

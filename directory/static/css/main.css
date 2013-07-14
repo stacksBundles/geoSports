@@ -249,9 +249,10 @@ div#map-canvas {
 .createButton, .logoutButton, .profileButton, .login-signup {
     background-color: rgb(100, 100, 100);
     color: rgb(255, 255, 255);
-    font-size: 130%;
+    font-size: 120%;
     padding: 4px 8px 4px 8px;
-    margin-right: 20px;
+    margin-right: 10px;
+    text-decoration: none;
 }
 
 #add-game {
@@ -289,7 +290,7 @@ div.actions {
     right:0;
     bottom:0;
     width: 320px;
-    height: 430px;
+    height: 500px;
     z-index: 1000;
     background-color: white;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
@@ -305,7 +306,7 @@ div.actions {
 }
 
 #gameCreator.opened.minimized {
-    margin-bottom: -400px;
+    margin-bottom: -480px;
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
@@ -323,6 +324,14 @@ div.actions {
 .pannel-bar .title {
     font-size: 0.8em;
     padding: 2px 5px;
+}
+
+#gameCreator form {
+    margin: 10px;
+}
+
+#gameCreator form input {
+    width: 100%;
 }
 
 img.facebook-login {

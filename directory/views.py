@@ -7,6 +7,7 @@ import re
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 def index(request):
 
@@ -55,29 +56,11 @@ def submitGame(request):
 
     if request.method == "POST" and request.is_ajax():
 
-        data = {}
-
-        data['lat'] = request.POST['lat']
-
-        data['long'] = request.POST['long']
-
-        data['when'] = request.POST['when']
-
-        data['sport'] = request.POST['sport']
-
-        data['isItOpen'] = request.POST['open']
-
-        if not request.POST['open']:
-
-            data['players_needed'] = request.POST['players']
-
-        else:
-
-            data['players_needed'] = ""
-
-        data['skill_level'] = request.POST['skill']
-
-        validate = addGameForm(data)
+        validate = addGameForm(request.POST)
+        
+        print request.POST
+        
+        print type(request.POST["when"])
 
         if validate.is_valid():
             
@@ -93,7 +76,7 @@ def submitGame(request):
 
         else:
 
-            response = HttpResponse("failure")
+            response = HttpResponse(validate.errors)
 
             return response
 

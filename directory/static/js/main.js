@@ -22,6 +22,14 @@ $(".shower-curtain, .BTN-close-pop-up").click(function() {
     closePopUp();
 });
 
+$("#add-game").click(function() {
+    var data = $(this).parent("form").serializeArray();
+    console.log(data);
+    $.post("/submitGame/", data, function(ret) {
+        console.log(ret);
+    });
+});
+
 $("#submit-filter select").change(function() {
     var data = $(this).parent("form").serializeArray();
     $.post("/filter/", data, function(ret) {
@@ -104,3 +112,8 @@ function createGame() {
         $(".login-pop-up").fadeIn();
     }
 }
+
+$("#id_lat, #id_long").parents("tr").each(function() {
+    $(this).hide();
+    $(this).prev().hide();
+});
