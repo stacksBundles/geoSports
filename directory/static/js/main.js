@@ -117,3 +117,22 @@ $("#id_lat, #id_long").parents("tr").each(function() {
     $(this).hide();
     $(this).prev().hide();
 });
+
+$("#id_name").change(function() {
+    var address = $(this).val();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location,
+              draggable: true
+          });
+          $("#id_lat").attr('value',results[0].geometry.location.lat());
+          $("#id_long").attr('value',results[0].geometry.location.lng());
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+});
+

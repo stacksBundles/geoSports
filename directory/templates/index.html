@@ -34,6 +34,7 @@ var green = "34BA46";
 var red = "FE7569";
 var blue = "3490EC";
 
+var geocoder;
 var map;
 var gameMarkers = new Array(0);
   
@@ -44,6 +45,7 @@ content: ''
 function initialize() {
 
   var games = new Array(0);
+  geocoder = new google.maps.Geocoder();
   
   {% for game in gameList %}
     games.push({{game|safe}});
