@@ -132,25 +132,80 @@ def filter(request):
 
         print("AJAX BABY")
 
+        print(request.POST)
+
         sport = request.POST['sport_filter']
+
+        sport = str(sport).strip()
 
         skill = request.POST['skill_filter']
 
+        skill = str(skill).strip()
+
+        print(sport)
+
+        print(skill)
+
+        a = games.objects.all().filter(sport = sport)
+
+        if a:
+
+            print("matched sport")
+        
+
         if sport == "All":
 
-            gameList = games.objects.all().filter(skill_level = request.POST['skill_filter'])
+            gameList = games.objects.all().filter(skill_level = skill)
 
-        elif skill == "All":
 
-            gameList = games.objects.all().filter(sport = sport, skill_level = request.POST['skill_filter'])
+        else:
+
+            if skill == "All":
+
+                gameList = games.objects.all().filter(sport = sport)
+
+            else:
+
+                gameList = games.objects.all().filter(sport = sport).filter(skill_level = skill)
+
+            
+
 
         if not gameList:
+
+            print("failed")
 
             statusReturn = "Sorry, no one is playing " + str(sport) + ", how about you start a game?"
 
             return HttpResponse(statusReturn)
 
-        return HttpResponse(gameList)
+        gameJSON = []
+        
+        for game in gameList:
+
+            date = str(game.when)
+
+            numbers = re.findall("(\d+)", date)
+
+            newDate = ""
+            
+            for bits in numbers:
+
+                newDate = newDate + bits + "/"
+
+            newDate = newDate[:-1]
+
+            dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
+
+            entry = simplejson.dumps(dictionary)
+
+            gameJSON.append(entry)
+
+        if gameJSON:
+
+            print("generated JSON")
+
+        return HttpResponse(gameJSON, content_type="application/json")
             
 
 def signup(request):
