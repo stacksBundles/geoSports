@@ -217,6 +217,12 @@ def signup(request):
     }
     
     return render(request, "addgame.html", context)
+
+def register(request):
+
+    string = "null"
+
+    return HttpResponse(string)
             
 
  
