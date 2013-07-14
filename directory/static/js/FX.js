@@ -1,5 +1,5 @@
 $(document).ready( function() {
-    $(document).on("submit", "#filter", function(e) {
+    $(document).on("click", "#filter", function(e) {
 
       e.preventDefault();
       var data = $(this).serialize()

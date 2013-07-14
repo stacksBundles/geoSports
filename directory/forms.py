@@ -31,8 +31,6 @@ class addGameForm(forms.Form):
 
     skill_level = forms.ChoiceField(choices = SKILL_CHOICES)
 
-    note = forms.CharField(max_length = 140)
-
 class filterForm(forms.Form):
 
     HOCKEY = "Hockey"
@@ -43,6 +41,8 @@ class filterForm(forms.Form):
     BASEBALL = "Baseball"
     ULTIMATE = "Ultimate"
     VOLLEYBALL = "Volleyball"
+    SQUASH = "Squash"
+    
     ALL = 'All'
 
     SPORT_CHOICES = (
@@ -75,6 +75,10 @@ class filterForm(forms.Form):
 
     skill_filter = forms.ChoiceField(choices = SKILL_CHOICES)
             
+class signupForm(forms.Form):
 
+    class Meta:
+        
+        model = profile
     
     

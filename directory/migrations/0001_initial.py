@@ -13,11 +13,13 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('lat', self.gf('django.db.models.fields.FloatField')()),
             ('long', self.gf('django.db.models.fields.FloatField')()),
-            ('when', self.gf('django.db.models.fields.DateField')()),
+            ('when', self.gf('django.db.models.fields.DateTimeField')()),
+            ('address', self.gf('django.db.models.fields.CharField')(default='default for testing, will be updated later', max_length=140)),
             ('sport', self.gf('django.db.models.fields.CharField')(max_length=140)),
             ('isItOpen', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('players_needed', self.gf('django.db.models.fields.IntegerField')(null=True)),
             ('skill_level', self.gf('django.db.models.fields.CharField')(max_length=11)),
+            ('note', self.gf('django.db.models.fields.CharField')(default='default for testing, will be updated later', max_length=140, blank=True)),
         ))
         db.send_create_signal(u'directory', ['games'])
 
@@ -52,14 +54,16 @@ class Migration(SchemaMigration):
     models = {
         u'directory.games': {
             'Meta': {'object_name': 'games'},
+            'address': ('django.db.models.fields.CharField', [], {'default': "'default for testing, will be updated later'", 'max_length': '140'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'isItOpen': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'lat': ('django.db.models.fields.FloatField', [], {}),
             'long': ('django.db.models.fields.FloatField', [], {}),
+            'note': ('django.db.models.fields.CharField', [], {'default': "'default for testing, will be updated later'", 'max_length': '140', 'blank': 'True'}),
             'players_needed': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'skill_level': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
             'sport': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
-            'when': ('django.db.models.fields.DateField', [], {})
+            'when': ('django.db.models.fields.DateTimeField', [], {})
         },
         u'directory.locations': {
             'Meta': {'object_name': 'locations'},

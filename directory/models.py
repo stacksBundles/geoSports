@@ -10,6 +10,8 @@ class games(models.Model):
 
     when = models.DateTimeField()
 
+    address = models.CharField(max_length = 140, default="default for testing, will be updated later")
+
     sport = models.CharField(max_length = 140)
 
     isItOpen = models.BooleanField()
@@ -32,6 +34,10 @@ class games(models.Model):
         )
 
     skill_level = models.CharField(max_length = 11, choices = SKILL_CHOICES)
+
+    note = models.CharField(max_length = 140, blank = True, default = "default for testing, will be updated later")
+
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
 
 
 class locations(models.Model):
@@ -62,6 +68,10 @@ class profile(models.Model):
     sports_played = models.CharField(max_length = 500)
 
     reputation = models.IntegerField()
+
+    image = models.ImageField(upload_to = "pictures")
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     
 
