@@ -6,6 +6,7 @@ from django.utils import simplejson
 import re
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 def index(request):
 
@@ -25,6 +26,8 @@ def index(request):
     form = filterForm()
     addForm = addGameForm()
 
+    addForm = addGameForm()
+
     context = {
         "gameList": gameJSON,
         "form": form,
@@ -37,10 +40,11 @@ def addGame(request):
 
     if request.is_ajax():
 
-        form = addGameForm()
+        addForm = addGameForm()
 
         context = {
             "statusUpdate": statusUpdate,
+            "addForm": addForm,
             }
 
         return render(request, "addGame.html", context)
@@ -94,6 +98,7 @@ def submitGame(request):
             return response
 
 
+
 def register(request):
 
     if request.method == "POST" and request.is_ajax():
@@ -122,11 +127,15 @@ def filter(request):
 
         print("AJAX BABY")
 
-        #print(request.POST)
+        print(request.POST)
 
         sport = request.POST['sport_filter']
 
+        sport = str(sport).strip()
+
         skill = request.POST['skill_filter']
+
+        skill = str(skill).strip()
 
         print(sport)
 
@@ -135,7 +144,6 @@ def filter(request):
         a = games.objects.all().filter(sport = sport)
 
         if sport == "Any Sport" and skill == "Any Level":
-
             gameList = games.objects.all()
 
         else:
@@ -157,9 +165,9 @@ def filter(request):
         for game in gameList:
 
             dictionary = {"lat": game.lat, "long": game.long, "when": str(game.when), "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
-            
-            gameJSON.append(dictionary)
 
+            gameJSON.append(dictionary)
+            
         return HttpResponse(simplejson.dumps(gameJSON), content_type="application/json")
             
 
@@ -168,15 +176,10 @@ def signup(request):
     string = "blank"
     
     context = {
-        string : "blank"
+        string : "blank",
     }
     
-    return render(request, "signup.html", context)
-            
-
- 
-
-        
+    return render(request, "addgame.html", context)
 
 def register(request):
 

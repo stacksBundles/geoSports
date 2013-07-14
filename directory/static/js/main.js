@@ -38,6 +38,8 @@ $("#submit-filter select").change(function() {
         new google.maps.Point(0, 0),
         new google.maps.Point(12, 35));
         
+        console.log(ret);
+        
         if (ret.length > 0) {
 
 
