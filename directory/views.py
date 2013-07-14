@@ -15,19 +15,7 @@ def index(request):
 
     for game in gameList:
 
-        date = str(game.when)
-
-        numbers = re.findall("(\d+)", date)
-
-        newDate = ""
-        
-        for bits in numbers:
-
-            newDate = newDate + bits + "/"
-
-        newDate = newDate[:-1]
-
-        dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
+        dictionary = {"lat": game.lat, "long": game.long, "when": str(game.when), "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
 
         entry = simplejson.dumps(dictionary)
 
@@ -133,15 +121,11 @@ def filter(request):
 
         print("AJAX BABY")
 
-        print(request.POST)
+        #print(request.POST)
 
         sport = request.POST['sport_filter']
 
-        sport = str(sport).strip()
-
         skill = request.POST['skill_filter']
-
-        skill = str(skill).strip()
 
         print(sport)
 
@@ -149,15 +133,9 @@ def filter(request):
 
         a = games.objects.all().filter(sport = sport)
 
-        if a:
+        if sport == "All" and skill == "All":
 
-            print("matched sport")
-        
-
-        if sport == "All":
-
-            gameList = games.objects.all().filter(skill_level = skill)
-
+            gameList = games.objects.all()
 
         else:
 
@@ -165,48 +143,23 @@ def filter(request):
 
                 gameList = games.objects.all().filter(sport = sport)
 
+            elif sport == "All":
+
+                gameList = games.objects.all().filter(skill_level = skill)
+
             else:
 
                 gameList = games.objects.all().filter(sport = sport).filter(skill_level = skill)
-
-            
-
-
-        if not gameList:
-
-            print("failed")
-
-            statusReturn = "Sorry, no one is playing " + str(sport) + ", how about you start a game?"
-
-            return HttpResponse(statusReturn)
 
         gameJSON = []
         
         for game in gameList:
 
-            date = str(game.when)
-
-            numbers = re.findall("(\d+)", date)
-
-            newDate = ""
+            dictionary = {"lat": game.lat, "long": game.long, "when": str(game.when), "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
             
-            for bits in numbers:
+            gameJSON.append(dictionary)
 
-                newDate = newDate + bits + "/"
-
-            newDate = newDate[:-1]
-
-            dictionary = {"lat": game.lat, "long": game.long, "when": newDate, "sport": game.sport, "open": game.isItOpen, "players_needed": game.players_needed, "skill_level": game.skill_level}
-
-            entry = simplejson.dumps(dictionary)
-
-            gameJSON.append(entry)
-
-        if gameJSON:
-
-            print(gameJSON)
-
-        return HttpResponse(gameJSON, content_type="application/json")
+        return HttpResponse(simplejson.dumps(gameJSON), content_type="application/json")
             
 
 def signup(request):
