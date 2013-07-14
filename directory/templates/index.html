@@ -197,11 +197,46 @@ $(document).on("click", ".createButton", function() {
       success: function(data) {
         $(".pop-up").replaceWith(data);
         $(".pop-up").show();
-        alert("ajaxed and showed")
+        $(document).click(function(e) {
+          if (!$(e.target).is(".pop-up")) {
+            $(".pop-up").removeClass('selected');
+            $(".pop-up").hide();
+          }
+        })
       }
     });
   });
 })
+
+$(document).on("click", ".profileButton", function() {
+  var current = $(this).attr("id");
+  $.ajax({
+    type: "GET",
+    url: "/userProfile/" + current + "/",
+    success: function(data) {
+
+      // RETURNS JSON DATA ABOUT THE USER //
+
+    }
+  });
+})
+
+$(document).on("click", ".logoutButton", function() {
+  $.ajax({
+    type: "GET",
+    url: '/logout/',
+    success: function(data) {
+
+      // YOU NOW KNOW THAT THE USER IS LOGGED OUT //
+      
+    }
+  })
+})
+
+$(document).keyup(function(e) {
+  if (e.keyCode == 27) {$(".pop-up").hide()}
+  
+});
     </script>        
         
     </head>
@@ -228,17 +263,18 @@ $(document).on("click", ".createButton", function() {
                         </form>
                     </div>
                 </div>
-                <div class="createButton">
-                  create game
-                </div>
-                <div id="meta">
                 
-                    {% if user.is_authenticated %}
-                        <a id="profile-link" href="{% url 'directory.views.profile' %}"> my profile </a>
-                    {% else %}
-                        <div class="login"><a class="login" id="login" href="{% url 'django.contrib.auth.views.login' %}">login</a></div>
-                        <div class="signup"><a class="signup" id="sign-up" href="{% url 'directory.views.signup' %}">Signup for <strong>FREE</strong></a></div>
-                    {% endif %}
+                <div id="meta">
+                  <span class="createButton">
+                    create game
+                  </span>
+                  {% if user.is_authenticated %}
+                      <span class="profileButton" id="{{ user.id }}"> my profile </span>
+                      <span class="logoutButton"> logout </span>
+                  {% else %}
+                      <div class="login"><a class="login" id="login" href="{% url 'django.contrib.auth.views.login' %}">login</a></div>
+                      <div class="signup"><a class="signup" id="sign-up" href="{% url 'directory.views.signup' %}">Signup for <strong>FREE</strong></a></div>
+                  {% endif %}
                 </div>
             </div>
         </header>
@@ -256,16 +292,16 @@ $(document).on("click", ".createButton", function() {
           
             {% if user.is_authenticated %}
 
-            <div class="form">
-
               <form>
                 {% csrf_token %}
                 <table>
-                  {% for entry in form %}
+                  {% for entry in addForm %}
                   <tr><td>{{ entry }}</td></tr>
                   <tr><td>{{ entry.label_tag }}</td></tr>
                   {% endfor %}
                 </table>
+
+                <span id="add-game"> submit </span>
 
               </form>
 
