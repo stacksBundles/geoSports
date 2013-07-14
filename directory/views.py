@@ -132,17 +132,17 @@ def filter(request):
 
         a = games.objects.all().filter(sport = sport)
 
-        if sport == "All" and skill == "All":
+        if sport == "Any Sport" and skill == "Any Level":
 
             gameList = games.objects.all()
 
         else:
 
-            if skill == "All":
+            if skill == "Any Level":
 
                 gameList = games.objects.all().filter(sport = sport)
 
-            elif sport == "All":
+            elif sport == "Any Sport":
 
                 gameList = games.objects.all().filter(skill_level = skill)
 

@@ -25,13 +25,13 @@ class games(models.Model):
 
     ELITE = "Elite"
 
-    ALL = "All"
+    LEVEL = "Any Level"
 
     SKILL_CHOICES = (
         (BEGINNER, "Beginner"),
         (COMPETITIVE, "Competitive"),
         (ELITE, "Elite"),
-        (ALL, "All"),
+        (LEVEL, "Any Level"),
         )
 
     skill_level = models.CharField(max_length = 11, choices = SKILL_CHOICES)

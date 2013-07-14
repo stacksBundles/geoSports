@@ -21,13 +21,13 @@ class addGameForm(forms.Form):
 
     ELITE = "Elite"
 
-    ALL = "All"
+    LEVEL = "Any Level"
 
     SKILL_CHOICES = (
         (BEGINNER, "Beginner"),
         (COMPETITIVE, "Competitive"),
         (ELITE, "Elite"),
-        (ALL, 'All'),
+        (LEVEL, 'Any Level'),
         )
 
     skill_level = forms.ChoiceField(choices = SKILL_CHOICES)
@@ -44,10 +44,10 @@ class filterForm(forms.Form):
     VOLLEYBALL = "Volleyball"
     SQUASH = "Squash"
     
-    ALL = 'All'
+    SPORT = 'Any Sport'
 
     SPORT_CHOICES = (
-        (ALL, 'All'),
+        (SPORT, 'Any Sport'),
         (HOCKEY, "Hockey"),
         (SOCCER, "Soccer"),
         (FOOTBALL, "Football"),
@@ -64,10 +64,10 @@ class filterForm(forms.Form):
     BEGINNER = "Beginner"
     COMPETITIVE = "Competitive"
     ELITE = "Elite"
-    ALL = "All"
+    LEVEL = "Any Level"
 
     SKILL_CHOICES = (
-        (ALL, 'All'),
+        (LEVEL, 'Any Level'),
         (BEGINNER, "Beginner"),
         (COMPETITIVE, "Competitive"),
         (ELITE, "Elite"),
