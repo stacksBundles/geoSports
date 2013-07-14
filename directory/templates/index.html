@@ -197,16 +197,10 @@ $(document).on("click", ".createButton", function() {
       success: function(data) {
         $(".pop-up").replaceWith(data);
         $(".pop-up").show();
-        $(document).click(function(e) {
-          if (!$(e.target).is(".pop-up")) {
-            $(".pop-up").removeClass('selected');
-            $(".pop-up").hide();
-          }
-        })
-      }
+        }
+      })
     });
   });
-})
 
 $(document).on("click", ".profileButton", function() {
   var current = $(this).attr("id");
@@ -216,6 +210,7 @@ $(document).on("click", ".profileButton", function() {
     success: function(data) {
 
       // RETURNS JSON DATA ABOUT THE USER //
+      
 
     }
   });
@@ -228,9 +223,10 @@ $(document).on("click", ".logoutButton", function() {
     success: function(data) {
 
       // YOU NOW KNOW THAT THE USER IS LOGGED OUT //
+
       
     }
-  })
+  });
 })
 
 $(document).keyup(function(e) {

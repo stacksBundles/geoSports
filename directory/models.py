@@ -71,8 +71,7 @@ class profile(models.Model):
     reputation = models.IntegerField()
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, default=1)
-    
-    
+
 
     
 
