@@ -16,3 +16,8 @@ $(".BTN-close-pop-up").click(function() {
 $(".shower-curtain, .BTN-close-pop-up").click(function() {
     closePopUp();
 });
+
+$("#submit-filter select").change(function() {
+    var data = $(this).parent("form").serializeArray();
+    $.post("/", data, function(ret){ console.log(ret) });
+});

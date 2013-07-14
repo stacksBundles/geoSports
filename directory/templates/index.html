@@ -26,17 +26,25 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&language=en"></script>
 
     <script>
+    
+//colors
+var yellow = "FFFF57";
+var green = "34BA46";
+var red = "FE7569";
+var blue = "3490EC";
+
 var map;
 
 function initialize() {
+
   var games = new Array(0);
   
   {% for game in gameList %}
-    console.log({{game|safe}});
+    games.push({{game|safe}});
   {% endfor %}
 
   var mapOptions = {
-    zoom: 6,
+    zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -56,19 +64,60 @@ function initialize() {
     handleNoGeolocation(false);
   }
   
-  var marker;
+  // Configure the look of the game pins
+  var pinColor = blue;
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+  new google.maps.Size(21, 34),
+  new google.maps.Point(0,0),
+  new google.maps.Point(10, 34));var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+  new google.maps.Size(40, 37),
+  new google.maps.Point(0, 0),
+  new google.maps.Point(12, 35));
+    
+  var gameMarkers = new Array(0);
+    
+  
+  var infowindow = new google.maps.InfoWindow({
+    content: ''
+  });
+  
+  for (var i = 0; i < games.length; i++) {
+  
+    // Build the game markers array
+    gameMarkers.push(new google.maps.Marker({
+        position: new google.maps.LatLng(games[i].lat, games[i].long ),
+        icon: pinImage,
+        shadow: pinShadow,
+        map: map,
+        clickable: true,
+        title : i.toString()
+      })
+    );
+    
+    gameMarkers[i].info = games[i];
+    
+    // Add the click listener for that marker
+    google.maps.event.addListener(gameMarkers[i], 'click', function(e) {
+
+        infowindow.content =   '<div id="content">'+
+                '<div class="date"></div>'+
+                '<div class="time">'+this.info.when+'</div>'+
+                '<h2 id="firstHeading" class="firstHeading">'+this.info.sport+'</h2>'+
+                '<div id="bodyContent">'+
+                '<p>'+(this.info.open ? "Open Event" : "Closed Event")+'</p>'+
+                '</div>'+
+            '</div>';
+        infowindow.open(map,this);
+        console.log(this.info);
+    });
+    
+  }
 
   // We clicked on the map
-  google.maps.event.addListener(map, 'click', function(e) {
+  google.maps.event.addListener(map, 'clicker', function(e) {
     var position = e.latLng;
     if (typeof marker === 'undefined') {
-      
-      // Yellow
-      var yellow = "FFFF57";
-      var green = "34BA46";
-      var red = "FE7569";
-      
-      var pinColor = red;
+    
       var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
       new google.maps.Size(21, 34),
       new google.maps.Point(0,0),
@@ -82,7 +131,8 @@ function initialize() {
         draggable: true,
         icon: pinImage,
         shadow: pinShadow,
-        map: map
+        map: map,
+        title: i.toString()
       });
       google.maps.event.addListener(marker, 'mouseup', function() {
         console.log(marker.getPosition());
@@ -93,10 +143,6 @@ function initialize() {
     }
     //infowindow.open(map,marker);
   });
-  
-  //google.maps.event.addListener(marker, 'click', function() {
-    //infowindow.open(map,marker);
-  //});
   
 }
 
