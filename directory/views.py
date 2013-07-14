@@ -23,10 +23,12 @@ def index(request):
     
 
     form = filterForm()
+    addForm = addGameForm()
 
     context = {
         "gameList": gameJSON,
         "form": form,
+        "addForm": addForm,
         }
 
     return render(request, "index.html", context)

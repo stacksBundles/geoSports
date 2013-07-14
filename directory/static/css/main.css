@@ -221,7 +221,7 @@ div#map-canvas {
 .map-top { top: -5px; left: 0; right: 0; height: 5px; }
 
 
-.pop-up {
+.pop-up, .login-pop-up {
     background-color: rgba(255, 255, 255, 0.8);
     position: fixed;
     width: 550px;
@@ -246,23 +246,7 @@ div#map-canvas {
     display: none;
 }
 
-.createButton {
-    background-color: rgb(100, 100, 100);
-    color: rgb(255, 255, 255);
-    font-size: 130%;
-    padding: 4px 8px 4px 8px;
-    margin-right: 20px;
-}
-
-.profileButton {
-    background-color: rgb(100, 100, 100);
-    color: rgb(255, 255, 255);
-    font-size: 130%;
-    padding: 4px 8px 4px 8px;
-    margin-right: 20px;
-}
-
-.logoutButton {
+.createButton, .logoutButton, .profileButton, .login-signup {
     background-color: rgb(100, 100, 100);
     color: rgb(255, 255, 255);
     font-size: 130%;
@@ -276,6 +260,74 @@ div#map-canvas {
     padding: 4px 8px 4px 8px;
 }
 
+div.actions {
+    display: inline-block;
+}
+
+.yesbtn {
+    background-color: #3490EC;
+}
+
+.nobtn {
+    background-color: #EC3436;
+}
+
+.yesbtn, .nobtn {
+    color: white;
+    text-align: center;
+    margin: 10px;
+    display: inline-block;
+    width: 100px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+#gameCreator {
+    position: fixed;
+    right:0;
+    bottom:0;
+    width: 320px;
+    height: 430px;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
+    margin-right: -400px;
+}
+
+#gameCreator.opened {
+    margin-right: 20px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+#gameCreator.opened.minimized {
+    margin-bottom: -400px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.pannel-bar {
+    position: relative;
+    top: 0;
+    width: 100%;
+    background-color: #4d4d4d;
+    color: white;
+}
+
+.pannel-bar .title {
+    font-size: 0.8em;
+    padding: 2px 5px;
+}
+
+img.facebook-login {
+    width: 38%;
+}
 
 /* ==========================================================================
    Helper classes

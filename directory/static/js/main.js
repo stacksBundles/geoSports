@@ -1,12 +1,17 @@
 function popUpContent(content) {
     $(".shower-curtain").fadeIn();
-    $(".pop-up").html("<p>test text</p>");
+    $(".pop-up").html(content);
     $(".pop-up").fadeIn();
+}
+
+function showLoginForm() {
+    $(".shower-curtain").fadeIn();
+    $(".login-pop-up").fadeIn();
 }
 
 function closePopUp() {
     $(".shower-curtain").fadeOut();
-    $(".pop-up").fadeOut();
+    $(".pop-up, .login-pop-up").fadeOut();
 }
 
 $(".BTN-close-pop-up").click(function() {
@@ -33,39 +38,44 @@ $("#submit-filter select").change(function() {
         new google.maps.Point(0, 0),
         new google.maps.Point(12, 35));
         
-        console.log(ret);
-        
-        for (var i = 0; i < ret.length; i++) {
-  
-            // Build the game markers array
-            gameMarkers.push(new google.maps.Marker({
-                position: new google.maps.LatLng(ret[i].lat, ret[i].long ),
-                icon: pinImage,
-                shadow: pinShadow,
-                map: map,
-                clickable: true,
-                title : i.toString()
-              })
-            );
-            
-            gameMarkers[i].info = ret[i];
-            
-            // Add the click listener for that marker
-            google.maps.event.addListener(gameMarkers[i], 'click', function(e) {
+        if (ret.length > 0) {
 
-                infowindow.content =   '<div id="content">'+
-                        '<div class="date"></div>'+
-                        '<div class="time">'+this.info.when+'</div>'+
-                        '<h2 id="firstHeading" class="firstHeading">'+this.info.sport+'</h2>'+
-                        '<div id="bodyContent">'+
-                        '<p>'+(this.info.open ? "Open Event" : "Closed Event")+'</p>'+
-                        '</div>'+
-                    '</div>';
-                infowindow.open(map,this);
-            });
+
+            for (var i = 0; i < ret.length; i++) {
+      
+                // Build the game markers array
+                gameMarkers.push(new google.maps.Marker({
+                    position: new google.maps.LatLng(ret[i].lat, ret[i].long ),
+                    icon: pinImage,
+                    shadow: pinShadow,
+                    map: map,
+                    clickable: true,
+                    title : i.toString()
+                  })
+                );
+                
+                gameMarkers[i].info = ret[i];
+                
+                // Add the click listener for that marker
+                google.maps.event.addListener(gameMarkers[i], 'click', function(e) {
+
+                    infowindow.content =   '<div id="content">'+
+                            '<div class="date"></div>'+
+                            '<div class="time">'+this.info.when+'</div>'+
+                            '<h2 id="firstHeading" class="firstHeading">'+this.info.sport+'</h2>'+
+                            '<div id="bodyContent">'+
+                            '<p>'+(this.info.open ? "Open Event" : "Closed Event")+'</p>'+
+                            '</div>'+
+                        '</div>';
+                    infowindow.open(map,this);
+                });
+                
+              }
+        } else {
+           popUpContent("<p>There are no games matching your criteria. Would you like to create a new one?</p>"+
+                   "<div class='actions'><a class='yesbtn' href='#' onclick='closePopUp();createGame();return false;'>Create Game</a><a class='nobtn' href='#' onclick='closePopUp();return false;'>No Thanks</a></div>"); 
+        }
             
-          }
-        
     });
 });
 
@@ -73,4 +83,22 @@ function clearMap(overlays) {
   while(overlays[0]){
     overlays.pop().setMap(null);
   }
+}
+
+function createGame() {
+
+    if ($("#gameCreator").length > 0) {
+        if ($("#gameCreator").hasClass('opened')) {
+            if ($("#gameCreator").hasClass('minimized')) {
+                $("#gameCreator").removeClass('minimized');
+            } else {
+                $("#gameCreator").addClass('minimized');
+            }
+        } else {
+            $("#gameCreator").addClass('opened');
+        }
+    } else {
+        $(".shower-curtain").fadeIn();
+        $(".login-pop-up").fadeIn();
+    }
 }
