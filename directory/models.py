@@ -5,6 +5,8 @@ from django.conf import settings
 
 class games(models.Model):
 
+    name = models.CharField()
+
     lat = models.FloatField()
 
     long = models.FloatField()
