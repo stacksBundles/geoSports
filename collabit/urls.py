@@ -8,9 +8,11 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'directory.views.index'),
     url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {"next_page": '/'}), 
     url(r'^signup/$', 'directory.views.signup'),
     url(r'^filter/$', 'directory.views.filter'),
-    url(r'^register/$', 'directory.views.register'), 
+    url(r'^register/$', 'directory.views.register'),
+    url(r'^userProfile/(\d+)/$', 'directory.views.userProfile'),
     # url(r'^collabit/', include('collabit.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

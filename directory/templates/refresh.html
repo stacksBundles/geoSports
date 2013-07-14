@@ -1,0 +1,38 @@
+<div class="pop-up">
+          <div id="fb-root"></div>
+          
+            {% if user.is_authenticated %}
+
+            <div class="form">
+
+              <form>
+                {% csrf_token %}
+                <table>
+                  {% for entry in form %}
+                  <tr><td>{{ entry }}</td></tr>
+                  <tr><td>{{ entry.label_tag }}</td></tr>
+                  {% endfor %}
+                </table>
+
+              </form>
+
+            {% else %}
+
+              <table>
+                <tr>
+                  <td>
+                    Please <a href="{% url 'directory.views.register' %}"> create an account </a> or <span id="login"> login </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Need to login quickly? Use your facebook account:
+                    <button class="btn btn-success" id="fb-auth">Login</button>
+                  </td>
+                </tr>
+              </table>
+
+            {% endif %}
+
+            </div>
+        </div>
