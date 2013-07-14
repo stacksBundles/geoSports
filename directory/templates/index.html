@@ -34,6 +34,7 @@ var red = "FE7569";
 var blue = "3490EC";
 
 var map;
+var gameMarkers = new Array(0);
 
 function initialize() {
 
@@ -73,9 +74,6 @@ function initialize() {
   new google.maps.Size(40, 37),
   new google.maps.Point(0, 0),
   new google.maps.Point(12, 35));
-    
-  var gameMarkers = new Array(0);
-    
   
   var infowindow = new google.maps.InfoWindow({
     content: ''
