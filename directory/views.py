@@ -57,10 +57,6 @@ def submitGame(request):
     if request.method == "POST" and request.is_ajax():
 
         validate = addGameForm(request.POST)
-        
-        print request.POST
-        
-        print type(request.POST["when"])
 
         if validate.is_valid():
             
